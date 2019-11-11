@@ -1,0 +1,39 @@
+<div class="fluid-container">
+    <div class="container">
+        <div class="card col-sm-4 offset-sm-4">
+            <div class="card-title text-center p-3">
+                <h1>Registration
+                    <span style="color:#d9534f;">
+                        <i class="far fa-question-circle "></i>
+                    </span>
+                </h1>
+            </div>
+            <div class="card-body m-auto">
+                <form [formGroup] = "myForm" (ngSubmit)="onSubmit(myForm)">
+                    <div class="form-group">
+                        <label for="userName">
+                            FullName:
+                            <input type="text" id="userName" placeholder="enter your name" [formControl]="myForm.controls['userName']" class="form-control">
+                        </label>
+                    </div>
+                    <div class="alert alert-danger" *ngIf="myForm.controls['userName'].touched && !myForm.controls['userName'].valid">
+                        User name is required
+                    </div>
+                    <div class="form-group">
+                        <label for="email">
+                            Email:
+                            <input type="email" id="email" placeholder="enter your email"
+                            [formControl]="myForm.controls['email']" 
+                            class="form-control">
+                        </label>
+                    </div>
+                    <div class="alert alert-danger" *ngIf="myForm.controls['email'].touched && !myForm.controls['email'].valid">
+                        Email is required
+                    </div>
+                    <input type="submit" value="Register" class="btn btn-info btn-block"
+                    [disabled]="!myForm.valid">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

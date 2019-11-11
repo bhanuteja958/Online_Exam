@@ -1,0 +1,16 @@
+.container{
+    margin-top:6vh; 
+}
+.card{
+    box-shadow: 5px 5px 5px 3px #444;
+}
+.correct{
+    color:#5cb85c;
+}
+.wrong{
+    color:#d9534f;
+}
+img{
+    height:200px;
+    height:200px;
+}

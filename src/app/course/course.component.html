@@ -1,0 +1,19 @@
+<div class="container" *ngIf="courses">
+  <div class="card text-center p-5">
+    <div class="card-title">
+      <h2>Choose One</h2>
+    </div>
+    <div class="card-body text-light">
+      <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-2">
+          <a class="btn btn-primary" (click)="onClick($event)">{{courses[0].course}}</a>
+        </div>
+        <div class="col-sm-2">
+          <a class="btn btn-primary"  (click)="onClick($event)">{{courses[1].course}}</a>
+        </div>
+        <div class="col-sm-4"></div>
+      </div>
+    </div>
+  </div>
+</div>

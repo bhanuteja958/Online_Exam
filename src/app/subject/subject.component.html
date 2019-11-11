@@ -1,0 +1,19 @@
+<div class="container" *ngIf="subjects">
+    <div class="card text-center  p-5">
+      <div class="card-title">
+        <h2>Choose a Technology</h2>
+      </div>
+      <div class="card-body text-light">
+        <div class="row">
+          <div class="col-sm-4"></div>
+          <div class="col-sm-2">
+            <a class="btn btn-primary" (click)="onClick($event)">{{subjects[0].sub_name}}</a>
+          </div>
+          <div class="col-sm-2">
+            <a class="btn btn-primary" (click)="onClick($event)">{{subjects[1].sub_name}}</a>
+          </div>
+          <div class="col-sm-4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
