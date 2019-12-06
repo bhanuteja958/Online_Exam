@@ -90,22 +90,58 @@ router.post("/register",(req,res)=>{
 });
 
 //route to insert score
-router.post("/score",(req,res)=>{
+router.put("/score",(req,res)=>{
   let sub = req.body.sub;
   let reg_id = req.body.reg_id;
   let score = req.body.score;
-  let sql = `insert into ${sub} value (${reg_id},${score})`;
+  let sql = `update ${sub} set score=${score} where reg_id = ${reg_id}`;
   db.query(sql,(err,result)=>{
     if(err){
       console.log("error:"+err)
     }
     else{
-      console.log("Score inserted")
       res.send(result)
     }
   })
 })
 
+//route to get score
+
+router.get("/score/:user_id/:sub_name",(req,res)=>{
+  let user_id = req.params.user_id;
+  let sub_name = req.params.sub_name;
+  let sql = `select * from ${sub_name} where reg_id = ${user_id}`;
+  db.query(sql,(err,result)=>{
+    if(err){
+      console.log("error:"+err);
+    }
+    else{
+      res.send(result);
+    }
+  })
+})
+
+//router to get average score
+
+router.get("/average/:course/:reg_id",(req,res) =>{
+  let course = req.params.course;
+  let reg_id = req.params.reg_id;
+  let sql;
+  if(course == "front"){
+    sql = `call avg(${reg_id})`;
+  }
+  else{
+    sql = `call avg1(${reg_id})`;
+  }
+  db.query(sql,(err,result)=>{
+    if(err){
+      console.log("error:"+err);
+    }
+    else{
+      res.send(result);
+    }
+  })
+})
 
 
 module.exports = router;

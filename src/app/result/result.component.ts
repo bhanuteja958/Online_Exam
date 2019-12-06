@@ -6,6 +6,9 @@ import { Answer } from '../services/models/answer.model';
 import { Question } from '../services/models/question.model';
 import { User } from '../services/models/user.model';
 import { Score } from '../services/models/score.model';
+import { ScoreDB } from '../services/models/score_db.model';
+import { async } from 'q';
+import { getSyntheticPropertyName } from '@angular/compiler/src/render3/util';
 
 @Component({
   selector: 'app-result',
@@ -31,6 +34,11 @@ export class ResultComponent implements OnInit {
       reg_id:undefined,
       score:undefined
     }
+    user_id:number;
+    btnText:string;
+    score_1:ScoreDB[];
+    score_2:ScoreDB[];
+    average:any[];
 
 
   constructor(
@@ -77,11 +85,10 @@ export class ResultComponent implements OnInit {
       this.score_db.reg_id = this.user.reg_id;
       this.score_db.score = parseInt(this.score);
       this.score_db.sub = this.sub;   
-      console.log(this.score_db);
       this.exam.insertScore(this.score_db).subscribe((data:any)=>{
         this.result = data;
       });
-      this.router.navigate(["/courses"])
+      alert("Score is submitted");
    }
 
    //check if answer is correct
@@ -102,6 +109,56 @@ export class ResultComponent implements OnInit {
     else{
       return false;
     }
+  }
+
+  async getscore (btntext:string){
+
+    //for frontend
+
+    if(this.btnText === "Get FrontEnd Average"){
+      await this.exam.getScore("css",this.user_id).toPromise().then(data =>{
+        this.score_1 = data;
+      })
+      await this.exam.getScore("angular",this.user_id).toPromise().then(data =>{
+        this.score_2 = data;
+      })
+      if(this.score_1 === undefined || this.score_2 === undefined || this.score_1[0].score === 0 || this.score_2[0].score === 0){
+        setTimeout(()=>{alert("You have to take both the tests for getting the average or you may have not submitted the score")},2000);
+      }
+      else{
+        await this.exam.getAverage("front",this.user_id).toPromise().then(data =>{
+          this.average = data;
+        })
+        alert(`Your frontend average is ${this.average[0][0].d}`);
+      }
+    }
+
+    //for backend
+
+    if(this.btnText === "Get BackEnd Average"){
+      await this.exam.getScore("css",this.user_id).toPromise().then(data =>{
+        this.score_1 = data;
+      })
+      await this.exam.getScore("angular",this.user_id).toPromise().then(data=>{
+        this.score_2 = data;
+      })
+      if(this.score_1 === undefined || this.score_2 === undefined || this.score_1[0].score === 0 || this.score_2[0].score === 0){
+        alert("You have to take both the tests for getting the average or you may have not submitted the score");
+      }
+      else{
+        await this.exam.getAverage("back",this.user_id).toPromise().then(data =>{
+          this.average = data;
+        })
+        alert(`Your backend average is ${this.average[0].d}`);
+    }
+  }
+}
+
+  //get average score
+  getAverage(event){
+    this.user_id = JSON.parse(localStorage.getItem("user")).reg_id;
+    this.btnText = event.target.textContent;
+    this.getscore(this.btnText);
   }
 
   ngOnInit() {

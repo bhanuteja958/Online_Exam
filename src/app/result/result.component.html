@@ -57,6 +57,14 @@
                     <div class="alert alert-success mt-4" *ngIf="wrongAnswers[i] === undefined" >Your answer is correct</div>
                     <div class="alert alert-danger mt-4" *ngIf="wrongAnswers[i] !== undefined">Your answer is wrong</div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <button class="btn btn-block btn-success" (click)="getAverage($event)">Get FrontEnd Average</button>
+                    </div>
+                    <div class="col-sm-6">
+                        <button class="btn btn-block btn-success" (click)="getAverage($event)">Get BankEnd Average</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
