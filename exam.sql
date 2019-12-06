@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2019 at 12:12 PM
+-- Generation Time: Dec 06, 2019 at 04:09 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.1.32
 
@@ -22,6 +22,30 @@ SET time_zone = "+00:00";
 -- Database: `exam`
 --
 
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `avg` (IN `id` INT)  BEGIN	
+DECLARE a,b,c,d INT;
+select score INTO c from css where reg_id = id;
+select score INTO a from angular where reg_id = id;
+set b=a+c;
+set d=b/2;
+select d;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `avg1` (IN `id` INT)  BEGIN
+DECLARE a,b,c,d int;
+select score into a from mongodb where reg_id = id;
+select score into b from nodejs where reg_id = id;
+set c=a+b;
+set d=c/2;
+select d;
+END$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -30,8 +54,21 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `angular` (
   `reg_id` int(11) DEFAULT NULL,
-  `score_ng` int(11) DEFAULT NULL
+  `score` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `angular`
+--
+
+INSERT INTO `angular` (`reg_id`, `score`) VALUES
+(468085, 4),
+(379859, 7),
+(21184, 9),
+(6202486, 8),
+(1794672, 4),
+(4030304, 0),
+(4698232, 0);
 
 -- --------------------------------------------------------
 
@@ -109,15 +146,26 @@ INSERT INTO `courses` (`course_id`, `course`) VALUES
 
 CREATE TABLE `css` (
   `reg_id` int(11) DEFAULT NULL,
-  `score_css` int(11) DEFAULT NULL
+  `score` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `css`
 --
 
-INSERT INTO `css` (`reg_id`, `score_css`) VALUES
-(1534423, 1);
+INSERT INTO `css` (`reg_id`, `score`) VALUES
+(468085, 2),
+(2039241, 1),
+(489365, 1),
+(489365, 1),
+(489365, 1),
+(4049606, 2),
+(379859, 4),
+(21184, 8),
+(6202486, 7),
+(1794672, 2),
+(4030304, 4),
+(4698232, 2);
 
 -- --------------------------------------------------------
 
@@ -127,8 +175,17 @@ INSERT INTO `css` (`reg_id`, `score_css`) VALUES
 
 CREATE TABLE `mongodb` (
   `reg_id` int(11) DEFAULT NULL,
-  `score_md` int(11) DEFAULT NULL
+  `score` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `mongodb`
+--
+
+INSERT INTO `mongodb` (`reg_id`, `score`) VALUES
+(1794672, 0),
+(4030304, 0),
+(4698232, 0);
 
 -- --------------------------------------------------------
 
@@ -138,8 +195,17 @@ CREATE TABLE `mongodb` (
 
 CREATE TABLE `nodejs` (
   `reg_id` int(11) DEFAULT NULL,
-  `score_nj` int(11) DEFAULT NULL
+  `score` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `nodejs`
+--
+
+INSERT INTO `nodejs` (`reg_id`, `score`) VALUES
+(1794672, 0),
+(4030304, 0),
+(4698232, 0);
 
 -- --------------------------------------------------------
 
@@ -210,23 +276,37 @@ CREATE TABLE `registration` (
 --
 
 INSERT INTO `registration` (`reg_id`, `reg_name`, `reg_email`) VALUES
-(752145, 'undefined', 'undefined'),
+(21184, 'loki', 'loki@gmail.com'),
+(379859, 'america', 'america@gmail.com'),
+(468085, 'bulba', 'bulba@gmail.com'),
+(489365, 'thor', 'thor@gmail.com'),
+(666144, 'test23', 'test23@gmail.com'),
+(698276, 'dylan', 'dylan@gmail.com'),
+(750346, 'pika', 'pika@gmail.com'),
 (1534423, 'teja7', 'teja7@gmail.com'),
 (1690997, 'siddhesh', 'siddu@gmail.com'),
+(1794672, 'antman', 'antman@gmail.com'),
 (1867235, 'undefined', 'undefined'),
+(2039241, 'rhino', 'rhino@gmail.com'),
 (2498849, 'keshav ', 'dadabhainoroji@gmail.com'),
 (2586511, 'undefined', 'undefined'),
 (3138945, 'keshav ', 'keshav@gmial.com'),
 (3226314, 'teja2', 'teja2@gmail.com'),
 (3619632, 'bhanu teja', 'teja@gmail.com'),
+(4030304, 'panther', 'panther@gmail.com'),
+(4049606, 'hulk', 'hulk@gmail.com'),
 (4495275, 'ganavi', 'ganavi@gmail.com'),
+(4659052, 'stilinski', 'stilinski@gmail.com'),
+(4698232, 'cheetah', 'cheetah@gmail.com'),
 (4874293, 'bhanu1', 'bhanu1@gmail.com'),
+(5138224, 'test24', 'test24@gmail.com'),
 (5362982, 'undefined', 'undefined'),
 (5368295, 'ravi teja', 'ravi@gmail.com'),
 (5535477, 'teja3', 'teja3@gmail.com'),
 (5945747, 'undefined', 'undefined'),
 (5976914, 'nachiketh', 'nachiketh011@gmail.com'),
 (6060717, 'sourabh', 'sourabh@gmail.com'),
+(6202486, 'drake', 'drake@gmail.com'),
 (6275286, 'undefined', 'undefined'),
 (6666291, 'teja1', 'teja1@gmail.com'),
 (7396625, 'nikhil', 'nikhil@gmail.com'),
@@ -235,6 +315,19 @@ INSERT INTO `registration` (`reg_id`, `reg_name`, `reg_email`) VALUES
 (8847997, 'undefined', 'undefined'),
 (9228662, 'harish', 'harish@gmail.com'),
 (9805026, 'mutahar', 'mutahar@gmail.com');
+
+--
+-- Triggers `registration`
+--
+DELIMITER $$
+CREATE TRIGGER `regmanager` AFTER INSERT ON `registration` FOR EACH ROW BEGIN
+insert into css values(new.reg_id,0);
+insert into angular values(new.reg_id,0);
+insert into mongodb values(new.reg_id,0);
+insert into nodejs values(new.reg_id,0);
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
